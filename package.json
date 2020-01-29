@@ -1,0 +1,31 @@
+{
+  "name": "cordova-plugin-flic-lib",
+  "version": "1.0.0",
+  "description": "A Cordova plugin providing access to the Flic SDK",
+  "cordova": {
+    "id": "cordova-plugin-flic-lib",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "keywords": [
+    "cordova",
+    "flic",
+    "smart",
+    "button",
+    "sdk",
+    "lib",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "author": "Hans Krywaa",
+  "license": "Apache 2.0",
+  "main": "./src/ionic/index.js",
+  "types": "./src/ionic/index.d.ts",
+  "bugs": {
+    "url": "https://github.com/HansKrywaa/cordova-plugin-flic-lib/issues"
+  },
+  "homepage": "https://github.com/HansKrywaa/cordova-plugin-flic-lib"
+}
