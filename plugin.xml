@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="cordova-plugin-flic-lib"
-	version="1.0.2">
+	version="1.0.4">
 	<name>Flic</name>
 	<description>A Cordova plugin providing access to the Flic SDK</description>
 	<license>Apache 2.0</license>
@@ -38,7 +38,7 @@
 	</platform>
 	<!-- ios -->
 	<platform name="ios">
-		<preference name="URL_SCHEME" defaul="YOUR_URL_SCHEME"/>
+		<preference name="URL_SCHEME" default="YOUR_URL_SCHEME"/>
 		<config-file target="*-Info.plist" parent="UIBackgroundModes">
 			<array>
 				<string>bluetooth-central</string>
