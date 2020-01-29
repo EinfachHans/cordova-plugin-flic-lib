@@ -1,11 +1,9 @@
 //
 //  Flic
 //
-//  Created by Maxim Dukhanov <m.dukhanov@gmail.com>
-//
 
 #import <UIKit/UIKit.h>
-#import <fliclib/fliclib.h>
+#import "./simulator-wrapper/fliclibWrapper.h"
 #import <Cordova/CDVPlugin.h>
 
 @interface Flic: CDVPlugin
