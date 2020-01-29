@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="cordova-plugin-flic-lib"
-	version="1.0.4">
+	version="1.0.5">
 	<name>Flic</name>
 	<description>A Cordova plugin providing access to the Flic SDK</description>
 	<license>Apache 2.0</license>
@@ -36,6 +36,7 @@
 		<source-file src="src/android/Flic.java" target-dir="de/hanskrywaa" />
 		<source-file src="src/android/PluginSettings.java" target-dir="de/hanskrywaa" />
 	</platform>
+
 	<!-- ios -->
 	<platform name="ios">
 		<preference name="URL_SCHEME" default="YOUR_URL_SCHEME"/>
@@ -69,7 +70,9 @@
 			</feature>
 		</config-file>
 		<framework src="src/ios/fliclib.framework" custom="true" embed="true" />
-			
+
+		<source-file src="src/ios/simulator-wrapper" />
+
 		<source-file src="src/ios/Flic.m" />
 		<header-file src="src/ios/Flic.h" />
 	</platform> 
