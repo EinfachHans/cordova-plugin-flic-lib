@@ -4,7 +4,7 @@
 
 #import "Flic.h"
 #import <Cordova/CDVAvailability.h>
-#import "./simulator-wrapper/fliclibWrapper.h"
+#import "fliclibWrapper.h"
 #import <CoreLocation/CoreLocation.h>
 
 @interface Flic () <SCLFlicManagerDelegate, SCLFlicButtonDelegate, CLLocationManagerDelegate>
