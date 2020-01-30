@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         id="cordova-plugin-flic-lib"
-        version="1.0.7">
+        version="1.0.8">
     <name>Flic</name>
     <description>A Cordova plugin providing access to the Flic SDK</description>
     <license>Apache 2.0</license>
@@ -39,17 +39,17 @@
     <!-- ios -->
     <platform name="ios">
         <preference name="URL_SCHEME" default="YOUR_URL_SCHEME"/>
-        <edit-config file="*-Info.plist" mode="merge" target="UIBackgroundModes">
+        <config-file target="*-Info.plist" parent="UIBackgroundModes">
             <array>
                 <string>bluetooth-central</string>
             </array>
-        </edit-config>
-        <edit-config file="*-Info.plist" mode="merge" target="LSApplicationQueriesSchemes">
+        </config-file>
+        <config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
             <array>
                 <string>flic20</string>
             </array>
-        </edit-config>
-        <edit-config file="*-Info.plist" mode="merge" target="CFBundleURLTypes">
+        </config-file>
+        <config-file target="*-Info.plist" parent="CFBundleURLTypes">
             <array>
                 <dict>
                     <key>CFBundleURLSchemes</key>
@@ -58,10 +58,10 @@
                     </array>
                 </dict>
             </array>
-        </edit-config>
-        <edit-config file="*-Info.plist" mode="override" target="FlicUrlScheme">
+        </config-file>
+        <config-file target="*-Info.plist" parent="FlicUrlScheme">
             <string>$URL_SCHEME</string>
-        </edit-config>
+        </config-file>
         <config-file target="config.xml" parent="/*">
             <feature name="Flic">
                 <param name="ios-package" value="Flic"/>
