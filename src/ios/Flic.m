@@ -15,7 +15,8 @@
 }
 
 static NSString * const pluginNotInitializedMessage = @"flic is not initialized";
-static NSString * const TAG = @"[TAF Flic] ";
+static NSString * const invalidUrlMessage = @"Invalid URL";
+static NSString * const TAG = @"[Flic] ";
 static NSString * const BUTTON_EVENT_SINGLECLICK = @"singleClick";
 static NSString * const BUTTON_EVENT_DOUBLECLICK = @"doubleClick";
 static NSString * const BUTTON_EVENT_HOLD = @"hold";
@@ -24,7 +25,7 @@ static NSString * const BUTTON_EVENT_HOLD = @"hold";
 - (void)pluginInitialize
 {
     [self log:@"pluginInitialize"];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOpenURL:) name:@"flicApp" object:nil];
+    // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOpenURL:) name:@"flicApp" object:nil];
 }
 
 - (void) init:(CDVInvokedUrlCommand*)command
@@ -72,6 +73,7 @@ static NSString * const BUTTON_EVENT_HOLD = @"hold";
     [self log:@"grabButton"];
     
     CDVPluginResult* result;
+
     // in case plugin is not initialized
     if (self.flicManager == nil) {
         [self log:@"flicManager is null"];
@@ -81,8 +83,41 @@ static NSString * const BUTTON_EVENT_HOLD = @"hold";
     }
     NSString *FlicUrlScheme = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"FlicUrlScheme"];
 	[[SCLFlicManager sharedManager] grabFlicFromFlicAppWithCallbackUrlScheme:FlicUrlScheme];
+
 	result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
 	[self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+}
+
+- (void) forgetButton:(CDVInvokedUrlCommand*)command
+{
+    [self log:@"forgetButton"];
+
+    CDVPluginResult* result;
+
+    NSDictionary *config = [command.arguments objectAtIndex:0];
+    NSString* BUTTON_ID = [config objectForKey:@"buttonId"];
+
+    if(BUTTON_ID == nil) {
+        result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"The ButtonId must be provided"];
+        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+        return;
+    }
+
+    NSArray * kButtons = [[SCLFlicManager sharedManager].knownButtons allValues];
+    for (SCLFlicButton *button in kButtons) {
+        NSString* buttonIdentifier = [button.buttonIdentifier UUIDString];
+        if([buttonIdentifier isEqualToString:BUTTON_ID]) {
+            [[SCLFlicManager sharedManager] forgetButton:button];
+
+            result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+            [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+            return;
+        }
+    }
+
+    result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Button not found"];
+    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    return;
 }
 
 - (void) waitForButtonEvent:(CDVInvokedUrlCommand*)command
@@ -222,15 +257,20 @@ static NSString * const BUTTON_EVENT_HOLD = @"hold";
     return hexString;
 }
 
-- (void)handleOpenURL:(NSNotification*)notification
+- (void)handleOpenFlicURL:(CDVInvokedUrlCommand*)command
 {
-    NSURL* url = [notification object];
-    
+    NSURL* url = [NSURL URLWithString: [command.arguments objectAtIndex:0]];
+    CDVPluginResult* result;
+
     if ([url isKindOfClass:[NSURL class]]) {
         [[SCLFlicManager sharedManager] handleOpenURL:url];
-        
-        NSLog(@"handleOpenURL %@", url);
+
+        result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId ];
     }
+
+    result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:invalidUrlMessage];
+    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
 
 // this logic help us to start app in the background

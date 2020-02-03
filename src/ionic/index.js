@@ -30,6 +30,11 @@ var Flic = /** @class */ (function () {
     return plu.forgetButton.apply(plu, arguments);
   };
 
+  Flic.handleOpenFlicURL = function (url, success, error) {
+    var plu = plugin();
+    return plu.handleOpenFlicURL.apply(plu, arguments);
+  };
+
   return Flic;
 }());
 export default Flic;

@@ -53,6 +53,11 @@ declare module 'cordova-plugin-flic-lib' {
          */
         static forgetButton(config: ForgetConfig, success: (result: any) => void, error: (reason: any) => void);
 
+        /**
+         * Have to been called after the App opens through Deeplink on iOS
+         */
+        static handleOpenFlicURL(url: string, success: (result: any) => void, error: (reason: any) => void);
+
     }
 
 }
