@@ -78,9 +78,11 @@ public class PluginSettings {
     public static void setIsActivityStarted(boolean value) {
         isActivityStarted = value;
 
-        SharedPreferences.Editor editor = mPreferences.edit();
-        editor.putBoolean("isActivityStarted", value);
-        editor.apply();
+        if(mPreferences != null) {
+            SharedPreferences.Editor editor = mPreferences.edit();
+            editor.putBoolean("isActivityStarted", value);
+            editor.apply();
+        }
     }
 
     public static String getAppId() {
