@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         id="cordova-plugin-flic-lib"
-        version="1.1.1">
+        version="1.2.0">
     <name>Flic</name>
     <description>A Cordova plugin providing access to the Flic SDK</description>
     <license>Apache 2.0</license>
@@ -68,15 +68,7 @@
                 <param name="onload" value="true"/>
             </feature>
         </config-file>
-        <framework src="src/ios/fliclib.framework" custom="true" embed="true"/>
-
-        <header-file src="src/ios/fliclibWrapper.h"/>
-
-        <header-file src="src/ios/SCLFlicButtonSimulator.h"/>
-        <source-file src="src/ios/SCLFlicButtonSimulator.m"/>
-
-        <header-file src="src/ios/SCLFlicManagerSimulator.h"/>
-        <source-file src="src/ios/SCLFlicManagerSimulator.m"/>
+        <framework src="src/ios/fliclib.xcframework" custom="true" embed="true"/>
 
         <header-file src="src/ios/Flic.h"/>
         <source-file src="src/ios/Flic.m"/>

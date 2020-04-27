@@ -4,7 +4,7 @@
 
 #import "Flic.h"
 #import <Cordova/CDVAvailability.h>
-#import "fliclibWrapper.h"
+#import <fliclib/fliclib.h>
 #import <CoreLocation/CoreLocation.h>
 
 @interface Flic () <SCLFlicManagerDelegate, SCLFlicButtonDelegate, CLLocationManagerDelegate>
@@ -31,13 +31,13 @@ static NSString * const BUTTON_EVENT_HOLD = @"hold";
 - (void) init:(CDVInvokedUrlCommand*)command
 {
     [self log:@"init"];
-    
+
 	NSDictionary *config = [command.arguments objectAtIndex:0];
 	NSString* APP_ID = [config objectForKey:@"appId"];
 	NSString* APP_SECRET = [config objectForKey:@"appSecret"];
-	
+
     self.flicManager = [SCLFlicManager configureWithDelegate:self defaultButtonDelegate:self appID:APP_ID appSecret:APP_SECRET backgroundExecution:YES];
-    
+
     CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:[self knownButtons]];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId ];
 }
@@ -45,7 +45,7 @@ static NSString * const BUTTON_EVENT_HOLD = @"hold";
 - (void) getKnownButtons:(CDVInvokedUrlCommand*)command
 {
     [self log:@"getKnownButtons"];
-    
+
     CDVPluginResult* result;
     // in case plugin is not initialized
     if (self.flicManager == nil) {
@@ -53,14 +53,14 @@ static NSString * const BUTTON_EVENT_HOLD = @"hold";
         [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
         return;
     }
-    
+
 	result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:[self knownButtons]];
 	[self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
 
 - (void) flicManagerDidRestoreState:(SCLFlicManager * _Nonnull) manager{
     [self log:@"flicManagerDidRestoreState"];
-    
+
     // setup trigger behavior for already grabbed buttons
     NSArray * kButtons = [[SCLFlicManager sharedManager].knownButtons allValues];
     for (SCLFlicButton *button in kButtons) {
@@ -71,7 +71,7 @@ static NSString * const BUTTON_EVENT_HOLD = @"hold";
 - (void) grabButton:(CDVInvokedUrlCommand*)command
 {
     [self log:@"grabButton"];
-    
+
     CDVPluginResult* result;
 
     // in case plugin is not initialized
@@ -145,11 +145,11 @@ static NSString * const BUTTON_EVENT_HOLD = @"hold";
     {
         NSLog(@"Could not grab: %@", error);
     }
-    
+
     if(button != nil){
         button.triggerBehavior = SCLFlicButtonTriggerBehaviorClickAndDoubleClickAndHold;
     }
-    
+
     [self log:@"Grabbed button"];
 }
 
@@ -163,7 +163,7 @@ static NSString * const BUTTON_EVENT_HOLD = @"hold";
 - (void)flicButton:(SCLFlicButton *)button didReceiveButtonClick:(BOOL)queued age:(NSInteger)age
 {
     [self log:@"didReceiveButtonClick"];
-    
+
     CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:[self getButtonEventObject:BUTTON_EVENT_SINGLECLICK button:button queued:queued age:age]];
     [result setKeepCallbackAsBool:YES];
     [self.commandDelegate sendPluginResult:result callbackId:self.onButtonClickCallbackId];
@@ -196,22 +196,22 @@ static NSString * const BUTTON_EVENT_HOLD = @"hold";
                    @"wasQueued": @(queued),
                    @"timeDiff": [NSNumber numberWithInteger:age]
                 };
-    
+
     return result;
 }
 
 - (NSMutableArray*)knownButtons
 {
     NSMutableArray *result = [[NSMutableArray alloc] init];
-    
+
     NSLog(@"get knownButtons");
-    
+
     NSArray * kButtons = [[SCLFlicManager sharedManager].knownButtons allValues];
     for (SCLFlicButton *button in kButtons) {
         NSDictionary* b = [self getButtonJsonObject:button];
         [result addObject:b];
     }
-    
+
     return result;
 }
 
@@ -225,7 +225,7 @@ static NSString * const BUTTON_EVENT_HOLD = @"hold";
         @"connectionState": [self connectionStateForButton:button],
         @"status": [self connectionStateForButton:button]
         };
-    
+
     return result;
 }
 
@@ -234,7 +234,7 @@ static NSString * const BUTTON_EVENT_HOLD = @"hold";
     {
         return @"";
     }
-    
+
     if (button.connectionState == SCLFlicButtonConnectionStateConnected) {
         return @"Connected";
     }else if (button.connectionState == SCLFlicButtonConnectionStateConnecting) {
@@ -244,7 +244,7 @@ static NSString * const BUTTON_EVENT_HOLD = @"hold";
     }else if (button.connectionState == SCLFlicButtonConnectionStateDisconnecting) {
         return @"Disconnecting";
     }
-    
+
     return @"unknown";
 }
 
@@ -278,7 +278,7 @@ static NSString * const BUTTON_EVENT_HOLD = @"hold";
 - (void) onAppTerminate{
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
-    
+
     if([locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
         [locationManager startMonitoringSignificantLocationChanges];
     } else {

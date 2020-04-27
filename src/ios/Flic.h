@@ -3,7 +3,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "fliclibWrapper.h"
+#import <fliclib/fliclib.h>
 #import <Cordova/CDVPlugin.h>
 
 @interface Flic: CDVPlugin
