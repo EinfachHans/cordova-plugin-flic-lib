@@ -1,4 +1,4 @@
-package de.hanskrywaa;
+package de.einfachhans.Flic;
 
 import android.content.SharedPreferences;
 import android.util.Log;

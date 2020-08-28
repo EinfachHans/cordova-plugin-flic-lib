@@ -1,4 +1,4 @@
-package de.hanskrywaa;
+package de.einfachhans.Flic;
 
 import android.content.Context;
 import android.content.Intent;

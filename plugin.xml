@@ -6,8 +6,8 @@
     <description>A Cordova plugin providing access to the Flic SDK</description>
     <license>Apache 2.0</license>
     <keywords>cordova,flic,smart,button,sdk</keywords>
-    <repo>https://github.com/HansKrywaa/cordova-plugin-flic-lib</repo>
-    <issue>https://github.com/HansKrywaa/cordova-plugin-flic-lib/issues</issue>
+    <repo>https://github.com/EinfachHans/cordova-plugin-flic-lib</repo>
+    <issue>https://github.com/EinfachHans/cordova-plugin-flic-lib/issues</issue>
 
     <engines>
         <engine name="cordova" version=">=7.1.0"/>
@@ -29,11 +29,11 @@
                 The value attribute should match the name of the plugin's Java class.
             -->
             <feature name="Flic">
-                <param name="android-package" value="de.hanskrywaa.Flic"/>
+                <param name="android-package" value="de.einfachhans.Flic.Flic"/>
             </feature>
         </config-file>
-        <source-file src="src/android/Flic.java" target-dir="de/hanskrywaa"/>
-        <source-file src="src/android/PluginSettings.java" target-dir="de/hanskrywaa"/>
+        <source-file src="src/android/Flic.java" target-dir="de/einfachhans/Flic"/>
+        <source-file src="src/android/PluginSettings.java" target-dir="de/einfachhans/Flic"/>
     </platform>
 
     <!-- ios -->
